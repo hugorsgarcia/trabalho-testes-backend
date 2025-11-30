@@ -5,6 +5,12 @@ const users = [
 ];
 
 const bankService = {
+
+    resetDb: () => {
+        users[0].balance = 1000;
+        users[1].balance = 500;
+    },
+
     getBalance: (userId) => {
         const user = users.find(u => u.id === userId);
         return user ? user.balance : null;
@@ -16,6 +22,14 @@ const bankService = {
 
         if (!sender || !receiver) {
             throw new Error("Usuário não encontrado");
+        }
+
+        if ( amount <= 0 ) {
+            throw new Error("Valor inválido para transferência");
+        }
+
+        if (sender.balance < amount) {
+            throw new Error("Saldo insuficiente");
         }
 
         sender.balance -= amount;
