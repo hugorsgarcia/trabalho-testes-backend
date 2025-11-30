@@ -16,7 +16,13 @@ app.post('/transfer', (req, res) => {
         res.status(200).json(result);
 
     } catch (error) {
-        // Tratamento de erro genérico
+        // Retorna 400 ou 404 dependendo do erro
+        if (error.message === "Usuário não encontrado") {
+            return res.status(404).json({ error: error.message });
+        }
+        if (error.message === "Saldo insuficiente" || error.message.includes("positivo")) {
+            return res.status(400).json({ error: error.message });
+        }
         res.status(500).json({ error: error.message });
     }
 });
