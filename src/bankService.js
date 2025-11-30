@@ -25,7 +25,7 @@ const bankService = {
         }
 
         if ( amount <= 0 ) {
-            throw new Error("Valor inválido para transferência");
+            throw new Error("O valor da transferência deve ser positivo");
         }
 
         if (sender.balance < amount) {
